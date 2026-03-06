@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La Casa del Maní | Sistema</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Cache-buster -->
+    <link rel="stylesheet" href="style.css?v=7" />
+</head>
+
+<body>
+
+    <!-- ===================== LOGIN (Plano 1) ===================== -->
+    <main class="auth" id="loginView">
+        <section class="auth-card" aria-label="Ingreso a La Casa del Maní">
+            <div class="brand">
+                <img id="brandLogo" class="brand__logo" src="" alt="Logo La Casa del Maní" />
+                <h1 class="brand__title">La Casa del Maní</h1>
+                <p class="brand__subtitle">Ingreso al sistema</p>
+            </div>
+
+            <form id="loginForm" class="form" novalidate>
+                <div class="field">
+                    <label for="username">Usuario o correo</label>
+                    <input id="username" name="username" type="email" inputmode="email" autocomplete="username"
+                        placeholder="usuario@dominio.com" required />
+                    <p class="field__error" id="usernameError" role="alert"></p>
+                </div>
+
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <div class="password">
+                        <input id="password" name="password" type="password" autocomplete="current-password"
+                            placeholder="••••••••" minlength="6" required />
+                        <button type="button" class="password__toggle" id="togglePassword"
+                            aria-label="Mostrar contraseña" title="Mostrar/Ocultar">👁</button>
+                    </div>
+                    <p class="field__error" id="passwordError" role="alert"></p>
+                </div>
+
+                <div class="row">
+                    <label class="checkbox">
+                        <input type="checkbox" id="rememberMe" />
+                        <span>Recordarme</span>
+                    </label>
+
+                    <a class="link" href="#" id="forgotPassword">¿Olvidó password?</a>
+                </div>
+
+                <button type="submit" class="btn btn--primary" id="btnLogin">
+                    INICIAR SESIÓN
+                </button>
+
+                <p class="foot">
+                    No tienes cuenta?
+                    <a class="link" href="#" id="goRegister">Registrate</a>
+                </p>
+
+                <div class="toast" id="toastLogin" role="status" aria-live="polite"></div>
+            </form>
+        </section>
+    </main>
+
+    <!-- ===================== PANEL (Plano 2) ===================== -->
+    <div class="app" id="dashboardView" hidden>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__brand">
+                <div class="brand-mini">
+                    <img id="brandLogoMini" class="brand-mini__logo" src="" alt="Logo La Casa del Maní">
+                    <div class="brand-mini__text">
+                        <div class="brand-mini__title">La Casa del Maní</div>
+                        <div class="brand-mini__sub">Panel interno</div>
+                    </div>
+                </div>
+
+                <!-- (3) Botón 3 rayas: pliega/despliega el menú de abajo -->
+                <button class="icon-btn sidebar__toggleNav" id="btnNavToggle" title="Plegar/Desplegar menú"
+                    aria-expanded="true">
+                    ☰
+                </button>
+            </div>
+
+            <div class="sidebar__meta">
+                <div class="meta__row">
+                    <span class="meta__label">Rol:</span>
+                    <span class="meta__value" id="roleText">—</span>
+                </div>
+                <div class="meta__row">
+                    <span class="meta__label">Usuario:</span>
+                    <span class="meta__value" id="nameText">—</span>
+                </div>
+            </div>
+
+            <nav class="nav" id="navMenu">
+                <!-- (5) Dashboard eliminado -> Inicio -->
+                <button class="nav__item is-active" data-view="inicio"><span class="nav__dot"></span> Inicio</button>
+                <button class="nav__item" data-view="inventario"><span class="nav__dot"></span> Inventario</button>
+                <button class="nav__item" data-view="ventas"><span class="nav__dot"></span> Ventas</button>
+                <button class="nav__item" data-view="produccion"><span class="nav__dot"></span> Producción</button>
+                <button class="nav__item" data-view="compras"><span class="nav__dot"></span> Compras</button>
+                <button class="nav__item" data-view="reportes"><span class="nav__dot"></span> Reportes</button>
+                <button class="nav__item" data-view="usuarios" id="navUsuarios"><span class="nav__dot"></span>
+                    Usuarios</button>
+            </nav>
+
+            <div class="sidebar__footer">
+                <button class="btn btn--ghost" id="btnLogout">Cerrar sesión</button>
+            </div>
+        </aside>
+
+        <section class="main">
+            <header class="topbar">
+                <button class="icon-btn topbar__menu" id="btnMenuMobile" aria-label="Menú">☰</button>
+
+                <div class="topbar__right">
+                    <div class="userchip">
+                        <div class="userchip__avatar" aria-hidden="true" id="avatarChip">LC</div>
+                        <div class="userchip__info">
+                            <div class="userchip__name" id="topName">—</div>
+                            <div class="userchip__role" id="topRole">—</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content">
+
+                <!-- (5) INICIO -->
+                <section class="hero hero--inicio" id="heroInicio">
+                    <div class="hero__text">
+                        <div class="hero__kicker">Bienvenidos a</div>
+                        <h1 class="hero__title">La Casa del Maní</h1>
+                        <p class="hero__subtitle">Inicio del sistema (usuario autenticado)</p>
+
+                        <div class="hero__cards hero__cards--2">
+                            <div class="card">
+                                <div class="card__label">Usuario</div>
+                                <div class="card__value" id="inicioUser">—</div>
+                            </div>
+                            <div class="card">
+                                <div class="card__label">Rol</div>
+                                <div class="card__value" id="inicioRole">—</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero__visual">
+                        <img class="hero__img" src="imagen/hero.jpg" alt="Imagen de portada"
+                            onerror="this.style.display='none';document.getElementById('heroFallbackInicio').style.display='block';">
+                        <div id="heroFallbackInicio" class="hero__fallback" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- (4) SOLO VENTAS muestra KPIs -->
+                <section class="hero hero--ventas hidden" id="heroVentas">
+                    <div class="hero__text">
+                        <div class="hero__kicker">Bienvenidos a</div>
+                        <h1 class="hero__title">La Casa del Maní</h1>
+                        <p class="hero__subtitle">Zona de administración (Ventas)</p>
+
+                        <div class="hero__cards">
+                            <div class="card">
+                                <div class="card__label">Ventas (hoy)</div>
+                                <div class="card__value" id="kpiVentasHoy">$ —</div>
+                            </div>
+                            <div class="card">
+                                <div class="card__label">Stock bajo</div>
+                                <div class="card__value" id="kpiStockBajo">—</div>
+                            </div>
+                            <div class="card">
+                                <div class="card__label">Órdenes</div>
+                                <div class="card__value" id="kpiOrdenes">—</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero__visual">
+                        <img class="hero__img" src="imagen/hero.jpg" alt="Imagen de portada"
+                            onerror="this.style.display='none';document.getElementById('heroFallbackVentas').style.display='block';">
+                        <div id="heroFallbackVentas" class="hero__fallback" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <div class="panel__header">
+                        <h2 class="panel__title" id="panelTitle">Inicio</h2>
+                        <p class="panel__desc" id="panelDesc">Bienvenida y estado general.</p>
+                    </div>
+                    <div class="panel__body" id="panelBody"></div>
+                </section>
+
+                <div class="toast" id="toastDash" role="status" aria-live="polite"></div>
+            </main>
+        </section>
+    </div>
+
+    <script type="module" src="script.js?v=7"></script>
+</body>
+
+</html>
